@@ -1,0 +1,29 @@
+@import "tailwindcss";
+
+:root {
+  --bg: #ffffff;
+  --text: black;
+  --textSoft: #667085;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.sidebar {
+  background: linear-gradient(80deg, #1a2d48 20%, #111929 100%, #1a2d48 20%);
+}
+
+.navbar {
+  background: #d0d5dd;
+}
