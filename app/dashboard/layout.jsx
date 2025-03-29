@@ -21,11 +21,11 @@ const Layout = ({ children }) => {
 
 
     return (
-        <div className="flex">
-            <div className={`h-screen text-white sticky sidebar ${isCollapsed ? 'flex-1/5' : 'flex-1/50'} transition-all duration-500 flex flex-col items-center max-w-[400px]`}>
+        <div className="flex flex-row">
+            <div className={`h-screen text-white fixed sidebar ${isCollapsed ? 'w-screen md:w-[312px]' : 'w-[70px]'} transition-all flex flex-col items-center  duration-500 md:max-w-[312px] z-[9999]`}>
                 <Sidebar toggleSidebar={toggleSidebar} isCollapsed={isCollapsed} />
             </div>
-            <div className={`navbar ${isCollapsed ? 'flex-4/5' : 'flex-11/12'}`}>
+            <div className={`${isCollapsed ? "md:ml-[315px]" : "ml-[60px] md:ml-[70px]"} overflow-auto transition-all duration-500 w-full`}>
                 <Navbar />
                 {children}
             </div>
