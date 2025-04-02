@@ -16,7 +16,7 @@ const menuLinks = [
     },
     {
         id: 2,
-        href: "/dashboard/role",
+        href: "/dashboard/rolemanagment",
         text: "Role Management",
         icon: <FiUsers className="h-6 w-6" />
     },

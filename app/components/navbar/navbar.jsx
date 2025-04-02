@@ -4,7 +4,7 @@ import React from 'react'
 import HeaderAvatar from '@/public/HeaderAvatar.png'
 import Image from "next/image"
 import { usePathname } from 'next/navigation'
-import menuLinks from "@/constant/constant"; // Sidebar'da kullandığınız menü linkleri
+import menuLinks from "@/app/constant/constant";
 
 const Navbar = () => {
     const pathname = usePathname()
@@ -16,7 +16,7 @@ const Navbar = () => {
     }
 
     return (
-        <div className="bg-gray-50 border-b-gray-300 shadow-sm h-[70px] flex flex-row justify-between items-center px-6 py-5">
+        <div className="bg-gray-50 border-b-gray-300 shadow-sm flex flex-row justify-between items-center px-6 py-2">
             <div>
                 <h4 className="font-semibold text-gray-800 text-md md:text-xl">
                     {getActiveTitle()}

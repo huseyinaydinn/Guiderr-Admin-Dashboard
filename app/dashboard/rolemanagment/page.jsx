@@ -4,7 +4,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import { FaPlus } from "react-icons/fa6";
 import { IoFilterOutline } from "react-icons/io5";
 import { BsThreeDotsVertical, BsDot } from "react-icons/bs";
-import RoleTable from "@/constant/RoleManagmentTable";
+import RoleTable from "@/app/constant/RoleManagmentTable";
 import { FaArrowDown, FaArrowUp } from "react-icons/fa6";
 import { MdEdit, MdDelete } from "react-icons/md";
 import { PiWarningCircle } from "react-icons/pi";
@@ -195,7 +195,7 @@ const RoleManagment = () => {
                     </div>
                     <button
                         onClick={() => setShowModal(true)}
-                        className="flex flex-row flex-nowrap items-center cursor-pointer gap-2 px-4 py-2 bg-blue-700 rounded-lg hover:hover:bg-blue-800 text-white transition-colors duration-300">
+                        className="flex flex-row flex-nowrap items-center cursor-pointer gap-2 px-4 py-2 bg-blue-400 rounded-lg hover:hover:bg-blue-500 text-white transition-colors duration-300">
                         <FaPlus className="w-4 h-4" />
                         <p>Create Role</p>
                     </button>
