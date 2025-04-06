@@ -4,7 +4,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import { FaPlus } from "react-icons/fa6";
 import { IoFilterOutline } from "react-icons/io5";
 import { BsThreeDotsVertical, BsDot } from "react-icons/bs";
-import RoleTable from "@/app/constant/RoleManagmentTable";
+import RoleTable from "@/constant/RoleManagmentTable";
 import { FaArrowDown, FaArrowUp } from "react-icons/fa6";
 import { MdEdit, MdDelete } from "react-icons/md";
 import { PiWarningCircle } from "react-icons/pi";
@@ -223,7 +223,7 @@ const RoleManagment = () => {
                                 placeholder="Search"
                             />
 
-                            {/* Arama Kategorisi Badge */}
+                            {/* Search Category Badge */}
                             {searchCategory !== 'all' && (
                                 <div className="absolute inset-y-0 right-0 flex items-center pr-3">
                                     <span className="text-xs font-medium bg-blue-100 text-blue-800 px-2 py-1 rounded">
@@ -232,7 +232,7 @@ const RoleManagment = () => {
                                 </div>
                             )}
 
-                            {/* Arama Filtreleri Dropdown */}
+                            {/* Search Filters Dropdown */}
                             {showSearchFilters && (
                                 <div className="absolute top-full left-0 w-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg z-50">
                                     <div className="p-2 space-y-1">

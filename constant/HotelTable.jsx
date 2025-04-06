@@ -7,7 +7,11 @@ const HotelTable = [
         hotelContact: "+1 (305) 123-4567",
         rating: 4.8,
         reviews: 125,
-        status: "Active"
+        status: "Active",
+        hotelLocation: "123 Seaside Avenue, Miami, FL, USA",
+        hotelOnboardModel: "Order-Based",
+        hotelCommissionPricing: "Auto-calculated",
+        hotelCompliance: "Hygiene and safety regulations"
     },
     {
         id: 2,
@@ -17,7 +21,11 @@ const HotelTable = [
         hotelContact: "+1 (305) 123-4567",
         rating: 4.8,
         reviews: 255,
-        status: "Blocked"
+        status: "Blocked",
+        hotelLocation: "123 Seaside Avenue, Miami, FL, USA",
+        hotelOnboardModel: "Order-Based",
+        hotelCommissionPricing: "Auto-calculated",
+        hotelCompliance: "Hygiene and safety regulations"
     },
 
     {
@@ -28,7 +36,11 @@ const HotelTable = [
         hotelContact: "+1 (305) 987-654321",
         rating: 3.2,
         reviews: 255,
-        status: "Blocked"
+        status: "Blocked",
+        hotelLocation: "123 Seaside Avenue, Miami, FL, USA",
+        hotelOnboardModel: "Order-Based",
+        hotelCommissionPricing: "Auto-calculated",
+        hotelCompliance: "Hygiene and safety regulations"
     },
 
     {
@@ -39,7 +51,11 @@ const HotelTable = [
         hotelContact: "+1 (305) 123-4567",
         rating: 1.2,
         reviews: 255,
-        status: "Blocked"
+        status: "Blocked",
+        hotelLocation: "123 Seaside Avenue, Miami, FL, USA",
+        hotelOnboardModel: "Order-Based",
+        hotelCommissionPricing: "Auto-calculated",
+        hotelCompliance: "Hygiene and safety regulations"
     },
 
     {
@@ -50,7 +66,11 @@ const HotelTable = [
         hotelContact: "+1 (305) 123-4567",
         rating: 3.4,
         reviews: 255,
-        status: "Pending"
+        status: "Pending",
+        hotelLocation: "123 Seaside Avenue, Miami, FL, USA",
+        hotelOnboardModel: "Order-Based",
+        hotelCommissionPricing: "Auto-calculated",
+        hotelCompliance: "Hygiene and safety regulations"
     },
 
 
@@ -62,7 +82,11 @@ const HotelTable = [
         hotelContact: "+1 (305) 123-4567",
         rating: 3.4,
         reviews: 255,
-        status: "Pending"
+        status: "Pending",
+        hotelLocation: "123 Seaside Avenue, Miami, FL, USA",
+        hotelOnboardModel: "Order-Based",
+        hotelCommissionPricing: "Auto-calculated",
+        hotelCompliance: "Hygiene and safety regulations"
     },
 
 
@@ -74,7 +98,11 @@ const HotelTable = [
         hotelContact: "+1 (305) 123-4567",
         rating: 3.4,
         reviews: 255,
-        status: "Pending"
+        status: "Pending",
+        hotelLocation: "123 Seaside Avenue, Miami, FL, USA",
+        hotelOnboardModel: "Order-Based",
+        hotelCommissionPricing: "Auto-calculated",
+        hotelCompliance: "Hygiene and safety regulations"
     },
 
 
@@ -86,7 +114,11 @@ const HotelTable = [
         hotelContact: "+1 (305) 123-4567",
         rating: 3.4,
         reviews: 255,
-        status: "Pending"
+        status: "Pending",
+        hotelLocation: "123 Seaside Avenue, Miami, FL, USA",
+        hotelOnboardModel: "Order-Based",
+        hotelCommissionPricing: "Auto-calculated",
+        hotelCompliance: "Hygiene and safety regulations"
     },
 
 
@@ -98,7 +130,11 @@ const HotelTable = [
         hotelContact: "+1 (305) 123-4567",
         rating: 3.4,
         reviews: 255,
-        status: "Pending"
+        status: "Pending",
+        hotelLocation: "123 Seaside Avenue, Miami, FL, USA",
+        hotelOnboardModel: "Order-Based",
+        hotelCommissionPricing: "Auto-calculated",
+        hotelCompliance: "Hygiene and safety regulations"
     },
 
 
@@ -110,7 +146,11 @@ const HotelTable = [
         hotelContact: "+1 (305) 123-4567",
         rating: 3.4,
         reviews: 255,
-        status: "Pending"
+        status: "Pending",
+        hotelLocation: "123 Seaside Avenue, Miami, FL, USA",
+        hotelOnboardModel: "Order-Based",
+        hotelCommissionPricing: "Auto-calculated",
+        hotelCompliance: "Hygiene and safety regulations"
     },
 
 
@@ -122,7 +162,11 @@ const HotelTable = [
         hotelContact: "+1 (305) 123-4567",
         rating: 3.4,
         reviews: 255,
-        status: "Pending"
+        status: "Pending",
+        hotelLocation: "123 Seaside Avenue, Miami, FL, USA",
+        hotelOnboardModel: "Order-Based",
+        hotelCommissionPricing: "Auto-calculated",
+        hotelCompliance: "Hygiene and safety regulations"
     },
 ];
 

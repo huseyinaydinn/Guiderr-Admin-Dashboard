@@ -5,7 +5,7 @@ import React, { useState, useEffect } from 'react'
 import sidebarLogo from '@/public/GuiderrLogo.svg'
 import { FiSidebar } from "react-icons/fi";
 import Link from "next/link";
-import menuLinks from "@/app/constant/constant";
+import menuLinks from "@/constant/constant";
 import { CiLogin } from "react-icons/ci";
 import CollapsedLogo from '@/public/CollapsedLogo.svg'
 import { usePathname } from 'next/navigation'; // Next.js 13+ için
@@ -43,7 +43,7 @@ const Sidebar = ({ toggleSidebar, isCollapsed }) => {
             </div>
 
             {/* Side bar Menu */}
-            <div className="flex flex-col gap-3 mt-5 h-10/12">
+            <div className="flex flex-col gap-2 mt-5 h-10/12">
                 {
                     menuLinks.map((link) => {
                         const isActive = pathname === link.href;
@@ -51,7 +51,7 @@ const Sidebar = ({ toggleSidebar, isCollapsed }) => {
                             <Link
                                 href={link.href}
                                 key={link.id}
-                                className={`flex flex-row px-3 py-2 rounded-md transition duration-400 
+                                className={`flex flex-row px-3 py-2 rounded-md transition duration-200 
                                     ${isActive
                                         ? 'bg-gradient-to-r from-[#0077C8] to-[#840EA7] text-white'
                                         : 'hover:bg-gradient-to-r hover:from-[#0077C8] hover:to-[#840EA7] hover:text-white'

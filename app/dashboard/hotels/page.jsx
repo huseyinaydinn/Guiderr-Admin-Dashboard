@@ -1,9 +1,11 @@
 "use client"
 
-import HotelTable from "@/app/constant/HotelTable";
+import HotelTable from "@/constant/HotelTable";
+import Link from "next/link";
 import React, { useState, useEffect, useRef } from 'react'
 import { BsDot, BsThreeDotsVertical } from "react-icons/bs";
-import { FaPlus, FaStar, FaArrowDown, FaArrowUp } from "react-icons/fa6";
+import { FaPlus, FaStar, FaArrowDown, FaArrowUp, FaInfo } from "react-icons/fa6";
+
 import { IoFilterOutline } from "react-icons/io5";
 import { LuFileCheck } from "react-icons/lu";
 import { MdEdit, MdDelete } from "react-icons/md";
@@ -141,7 +143,7 @@ const Page = () => {
     return (
         <div className="mx-auto max-w-[2880px] pb-6 px-4 md:px-6 lg:px-8 flex flex-col gap-6">
 
-            {/* Kartlar */}
+            {/* Cards */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 w-full">
                 {['Total Hotels', 'Active Hotels', 'Pending Hotels', 'Blocked Hotels'].map((title, index) => (
                     <div key={index} className="bg-white p-4 rounded-xl shadow-sm border border-gray-200">
@@ -159,7 +161,7 @@ const Page = () => {
                 ))}
             </div>
 
-            {/* Arama ve Filtre Alanı */}
+            {/* Search & Filter Side */}
             <div className="flex flex-col lg:flex-row gap-4 w-full items-stretch">
                 <form className="flex-1 relative" ref={searchRef}>
                     <div className="relative">
@@ -214,19 +216,20 @@ const Page = () => {
                         <IoFilterOutline className="w-5 h-5" />
                         <span className="text-sm">Filters</span>
                     </button>
-                    <button
-                        className="flex items-center gap-2 px-4 py-2.5 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors"
+                    <Link
+                        href={'/dashboard/hotels/addNewHotel'}
+                        className="flex items-center gap-2 px-4 py-2.5 bg-blue-500 hover:bg-blue-600 rounded-lg transition-colors"
                     >
-                        <FaPlus className="w-5 h-5" />
-                        <span className="text-sm">Add New Hotel</span>
-                    </button>
+                        <FaPlus className="w-5 h-5 text-white" />
+                        <span className="text-sm text-white">Add New Hotel</span>
+                    </Link>
                 </div>
             </div>
 
-            {/* Tablo */}
+            {/* Table */}
             <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
                 <div className="p-4 border-b border-gray-200">
-                    <h2 className="text-xl font-semibold">Restaurants</h2>
+                    <h2 className="text-xl font-semibold">Hotels</h2>
                 </div>
 
                 <div className="overflow-x-auto">
@@ -276,6 +279,14 @@ const Page = () => {
                                         </button>
                                         {activeDropdown === item.id && (
                                             <div className="absolute right-10 top-10 bg-white shadow-lg rounded-lg py-1 z-50 border border-gray-200">
+                                                <Link
+                                                    href={`/dashboard/hotels/${item.id}`}
+                                                    target="_blank"
+                                                    className="flex items-center gap-2 px-4 py-2.5 w-full hover:bg-green-50 text-sm"
+                                                >
+                                                    <FaInfo className="text-green-600" />
+                                                    Info
+                                                </Link>
                                                 <button
                                                     onClick={() => handleEditHotel(item)}
                                                     className="flex items-center gap-2 px-4 py-2.5 w-full hover:bg-blue-50 text-sm"

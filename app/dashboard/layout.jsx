@@ -1,7 +1,8 @@
 "use client"
+
 import React from 'react'
-import Sidebar from "../components/sidebar/sidebar"
-import Navbar from "../components/navbar/navbar"
+import Sidebar from "@/components/sidebar/sidebar"
+import Navbar from "@/components/navbar/navbar"
 import { useEffect, useState } from "react"
 
 const Layout = ({ children }) => {

@@ -4,7 +4,7 @@ import React from 'react'
 import HeaderAvatar from '@/public/HeaderAvatar.png'
 import Image from "next/image"
 import { usePathname } from 'next/navigation'
-import menuLinks from "@/app/constant/constant";
+import menuLinks from "@/constant/constant";
 
 const Navbar = () => {
     const pathname = usePathname()

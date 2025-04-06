@@ -1,5 +1,6 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
+import "apexcharts/dist/apexcharts.css";
 
 const fontInter = Inter({
   variable: "--font-inter",
