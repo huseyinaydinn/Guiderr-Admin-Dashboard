@@ -1,11 +1,10 @@
 "use client"
 
-import HotelTable from "@/constant/hotels/HotelTable";
+import RestaurantTable from "@/constant/restaurant/RestaurantTable";
 import Link from "next/link";
 import React, { useState, useEffect, useRef } from 'react'
 import { BsDot, BsThreeDotsVertical } from "react-icons/bs";
 import { FaPlus, FaStar, FaArrowDown, FaArrowUp, FaInfo } from "react-icons/fa6";
-
 import { IoFilterOutline } from "react-icons/io5";
 import { LuFileCheck } from "react-icons/lu";
 import { MdEdit, MdDelete } from "react-icons/md";
@@ -20,45 +19,49 @@ const Page = () => {
         Pending: "text-yellow-600 bg-yellow-100"
     };
 
-    // STATE'LER
+    // STATES
     const [currentPage, setCurrentPage] = useState(1);
-    const [originalData, setOriginalData] = useState(HotelTable);
-    const [filteredData, setFilteredData] = useState(HotelTable);
+    const [originalData, setOriginalData] = useState(RestaurantTable);
+    const [filteredData, setFilteredData] = useState(RestaurantTable);
     const [sortConfig, setSortConfig] = useState({ column: null, isAscending: true });
     const [showEditModal, setShowEditModal] = useState(false);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [activeDropdown, setActiveDropdown] = useState(null);
     const [searchQuery, setSearchQuery] = useState("");
     const [formData, setFormData] = useState({
-        hotelName: "",
-        hotelType: "",
-        hotelEmail: "",
-        hotelContact: "",
+        restaurantName: "",
+        restaurantType: "",
+        restaurantEmail: "",
+        restaurantContact: "",
         rating: "",
         status: ""
     });
-    const [editingHotel, setEditingHotel] = useState(null);
+    const [editingRestaurant, setEditingRestaurant] = useState(null);
     const [deletingItem, setDeletingItem] = useState(null);
     const [searchCategory, setSearchCategory] = useState('all');
     const [showSearchFilters, setShowSearchFilters] = useState(false);
     const searchRef = useRef(null);
 
-    // Filtre ve sıralama
     useEffect(() => {
         const lowerQuery = searchQuery.toLowerCase();
         const filtered = originalData.filter(item => {
-            if (searchCategory === 'hotelName') return item.hotelName.toLowerCase().includes(lowerQuery);
-            if (searchCategory === 'hotelType') return item.hotelType.toLowerCase().includes(lowerQuery);
-            if (searchCategory === 'hotelEmail') return item.hotelEmail.toLowerCase().includes(lowerQuery);
-            if (searchCategory === 'status') return item.status.toLowerCase().includes(lowerQuery);
+            const name = item.restaurantName?.toLowerCase() || "";
+            const type = item.restaurantType?.toLowerCase() || "";
+            const email = item.restaurantEmail?.toLowerCase() || "";
+            const status = item.status?.toLowerCase() || "";
+
+            if (searchCategory === 'restaurantName') return name.includes(lowerQuery);
+            if (searchCategory === 'restaurantType') return type.includes(lowerQuery);
+            if (searchCategory === 'restaurantEmail') return email.includes(lowerQuery);
+            if (searchCategory === 'status') return status.includes(lowerQuery);
+
             return (
-                item.hotelName.toLowerCase().includes(lowerQuery) ||
-                item.hotelType.toLowerCase().includes(lowerQuery) ||
-                item.hotelEmail.toLowerCase().includes(lowerQuery) ||
-                item.status.toLowerCase().includes(lowerQuery)
+                name.includes(lowerQuery) ||
+                type.includes(lowerQuery) ||
+                email.includes(lowerQuery) ||
+                status.includes(lowerQuery)
             );
         });
-
         const sorted = [...filtered].sort((a, b) => {
             if (!sortConfig.column) return 0;
             const aVal = a[sortConfig.column]?.toString() || "";
@@ -76,7 +79,7 @@ const Page = () => {
     const endIndex = startIndex + ITEMS_PER_PAGE;
     const paginatedData = filteredData.slice(startIndex, endIndex);
 
-    // Sıralama fonksiyonları
+    // Sorting functions
     const handleSort = (column) => {
         setSortConfig(prev => ({
             column,
@@ -93,11 +96,11 @@ const Page = () => {
         return <FaArrowDown className="w-2 h-2 opacity-0" />;
     }
 
-    // Sayfalama
+    // PageNext PagePrev functions
     const handlePrevious = () => currentPage > 1 && setCurrentPage(prev => prev - 1);
     const handleNext = () => currentPage < totalPages && setCurrentPage(prev => prev + 1);
 
-    // Arama ve filtreleme
+    // Search and Filter
     useEffect(() => {
         const handleClickOutside = (event) => {
             if (searchRef.current && !searchRef.current.contains(event.target)) {
@@ -113,25 +116,25 @@ const Page = () => {
         setFormData(prev => ({ ...prev, [name]: value }));
     };
 
-    // CRUD Operasyonları
-    const handleEditHotel = (hotel) => {
-        setEditingHotel(hotel);
-        setFormData(hotel);
+    // CRUD Operations
+    const handleEditRestaurant = (restaurant) => {
+        setEditingRestaurant(restaurant);
+        setFormData(restaurant);
         setShowEditModal(true);
         setActiveDropdown(null);
     };
 
-    const updateHotel = (e) => {
+    const updateRestaurant = (e) => {
         e.preventDefault();
         const updatedData = originalData.map(item =>
-            item.id === editingHotel.id ? { ...item, ...formData } : item
+            item.id === editingRestaurant.id ? { ...item, ...formData } : item
         );
         setOriginalData(updatedData);
         setShowEditModal(false);
     };
 
     const confirmDelete = () => {
-        setOriginalData(prev => prev.filter(hotel => hotel.id !== deletingItem.id));
+        setOriginalData(prev => prev.filter(restaurant => restaurant.id !== deletingItem.id));
         setShowDeleteModal(false);
         setActiveDropdown(null);
     };
@@ -145,7 +148,7 @@ const Page = () => {
 
             {/* Cards */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 w-full pt-4">
-                {['Total Hotels', 'Active Hotels', 'Pending Hotels', 'Blocked Hotels'].map((title, index) => (
+                {['Total Restaurants', 'Active Restaurants', 'Pending Restaurants', 'Blocked Restaurants'].map((title, index) => (
                     <div key={index} className="bg-white p-4 rounded-xl shadow-sm border border-gray-200">
                         <div className="flex justify-between items-start">
                             <div>
@@ -176,7 +179,7 @@ const Page = () => {
                             onChange={(e) => setSearchQuery(e.target.value)}
                             onClick={() => setShowSearchFilters(true)}
                             className="w-full pl-10 pr-24 py-2.5 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                            placeholder="Search hotels..."
+                            placeholder="Search restaurants..."
                         />
 
                         {searchCategory !== 'all' && (
@@ -190,7 +193,7 @@ const Page = () => {
                         {showSearchFilters && (
                             <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-200 rounded-lg shadow-xl z-50">
                                 <div className="p-2 space-y-1">
-                                    {['all', 'hotelName', 'hotelType', 'hotelEmail', 'status'].map((category) => (
+                                    {['all', 'restaurantName', 'restaurantType', 'restaurantEmail', 'status'].map((category) => (
                                         <button
                                             key={category}
                                             onClick={() => {
@@ -217,11 +220,11 @@ const Page = () => {
                         <span className="text-sm">Filters</span>
                     </button>
                     <Link
-                        href={'/dashboard/hotels/addNewHotel'}
+                        href={'/dashboard/restaurant/addNewRestaurant'}
                         className="flex items-center gap-2 px-4 py-2.5 bg-blue-500 hover:bg-blue-600 rounded-lg transition-colors"
                     >
                         <FaPlus className="w-5 h-5 text-white" />
-                        <span className="text-sm text-white">Add New Hotel</span>
+                        <span className="text-sm text-white">Add New Restaurant</span>
                     </Link>
                 </div>
             </div>
@@ -229,14 +232,14 @@ const Page = () => {
             {/* Table */}
             <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
                 <div className="p-4 border-b border-gray-200">
-                    <h2 className="text-xl font-semibold">Hotels</h2>
+                    <h2 className="text-xl font-semibold">Restaurants</h2>
                 </div>
 
                 <div className="overflow-x-auto">
                     <table className="w-full">
                         <thead className="bg-gray-50 border-b border-gray-200">
                             <tr>
-                                {['hotelName', 'hotelType', 'hotelEmail', 'rating', 'status'].map((column) => (
+                                {['restaurantName', 'restaurantType', 'restaurantEmail', 'restaurantContact', 'rating', 'status'].map((column) => (
                                     <th
                                         key={column}
                                         onClick={() => handleSort(column)}
@@ -254,9 +257,10 @@ const Page = () => {
                         <tbody className="divide-y divide-gray-200">
                             {paginatedData.map((item) => (
                                 <tr key={item.id} className="hover:bg-gray-50">
-                                    <td className="px-4 py-3.5 text-sm text-gray-900">{item.hotelName}</td>
-                                    <td className="px-4 py-3.5 text-sm text-gray-700">{item.hotelType}</td>
-                                    <td className="px-4 py-3.5 text-sm text-gray-700">{item.hotelEmail}</td>
+                                    <td className="px-4 py-3.5 text-sm text-gray-900">{item.restaurantName}</td>
+                                    <td className="px-4 py-3.5 text-sm text-gray-700">{item.restaurantType}</td>
+                                    <td className="px-4 py-3.5 text-sm text-gray-700">{item.restaurantEmail}</td>
+                                    <td className="px-4 py-3.5 text-sm text-gray-700">{item.restaurantContact}</td>
                                     <td className="px-4 py-3.5 text-sm text-gray-700">
                                         <div className="flex items-center gap-1.5">
                                             <FaStar className="text-yellow-400" />
@@ -280,7 +284,7 @@ const Page = () => {
                                         {activeDropdown === item.id && (
                                             <div className="absolute right-10 top-10 bg-white shadow-lg rounded-lg py-1 z-50 border border-gray-200">
                                                 <Link
-                                                    href={`/dashboard/hotels/${item.id}`}
+                                                    href={`/dashboard/restaurant/${item.id}`}
                                                     target="_blank"
                                                     className="flex items-center gap-2 px-4 py-2.5 w-full hover:bg-green-50 text-sm"
                                                 >
@@ -288,7 +292,7 @@ const Page = () => {
                                                     Info
                                                 </Link>
                                                 <button
-                                                    onClick={() => handleEditHotel(item)}
+                                                    onClick={() => handleEditRestaurant(item)}
                                                     className="flex items-center gap-2 px-4 py-2.5 w-full hover:bg-blue-50 text-sm"
                                                 >
                                                     <MdEdit className="text-blue-600" />
@@ -351,8 +355,8 @@ const Page = () => {
                     <div className="bg-white rounded-xl w-full max-w-md p-6">
                         <div className="text-center">
                             <PiWarningCircle className="w-12 h-12 text-red-500 mx-auto mb-4" />
-                            <h3 className="text-lg font-bold mb-2">Delete Hotel</h3>
-                            <p className="mb-4">Are you sure you want to delete this hotel? This action cannot be undone.</p>
+                            <h3 className="text-lg font-bold mb-2">Delete Restaurant</h3>
+                            <p className="mb-4">Are you sure you want to delete this restaurant? This action cannot be undone.</p>
                             <div className="flex justify-center gap-4">
                                 <button
                                     onClick={() => setShowDeleteModal(false)}
@@ -376,9 +380,9 @@ const Page = () => {
             {showEditModal && (
                 <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
                     <div className="bg-white rounded-xl w-full max-w-md p-6">
-                        <h2 className="text-xl font-bold mb-4">Edit Hotel</h2>
-                        <form onSubmit={updateHotel}>
-                            {['hotelName', 'hotelType', 'hotelEmail', 'hotelContact', 'rating', 'status'].map((field) => (
+                        <h2 className="text-xl font-bold mb-4">Edit Restaurant</h2>
+                        <form onSubmit={updateRestaurant}>
+                            {['restaurantName', 'restaurantType', 'restaurantEmail', 'restaurantContact', 'rating', 'status'].map((field) => (
                                 <div key={field} className="mb-4">
                                     <label className="block text-sm font-medium mb-1">
                                         {field.replace(/([A-Z])/g, ' $1').trim()}

@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { Fragment } from 'react';
 import { Listbox, Transition } from '@headlessui/react';
-import HotelDetailsCheckbox from "@/constant/HotelDetailsCheckbox";
+import HotelDetailsCheckbox from "@/constant/hotels/HotelDetailsCheckbox";
 import { ImUpload } from "react-icons/im";
 import { RxCross2 } from "react-icons/rx";
 import {
@@ -11,7 +11,7 @@ import {
     roomCategories,
     cancellationPolicies,
     checkInOutOptions
-} from '@/constant/AddNewHotel'
+} from '@/constant/hotels/AddNewHotel'
 
 
 

@@ -1,13 +1,12 @@
-
 import React from 'react'
-import restaurantChartData from "@/components/restaurants/restaurantChartData"
+import chartData from "./restaurantChartData"
 
 const DonutLinesChart = () => {
     // Total amount
-    const total = restaurantChartData.reduce((acc, item) => acc + item.value, 0);
+    const total = chartData.reduce((acc, item) => acc + item.value, 0);
 
     // Calculate percent to all function
-    const chartDataWithPercent = restaurantChartData.map((item) => ({
+    const chartDataWithPercent = chartData.map((item) => ({
         ...item,
         percent: ((item.value / total) * 100).toFixed(2),
     }));

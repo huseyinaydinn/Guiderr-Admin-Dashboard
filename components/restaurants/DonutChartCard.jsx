@@ -1,15 +1,14 @@
-"use client"
-
+// components/DonutChartCard.js
 import React, { useEffect, useRef } from 'react';
 import ApexCharts from 'apexcharts';
-import restaurantChartData from "@/components/restaurants/restaurantChartData";
+import chartData from "./restaurantChartData";
 
 const DonutChartCard = () => {
 
 
-    const series = restaurantChartData.map((item) => item.value);
-    const colors = restaurantChartData.map((item) => item.color);
-    const labels = restaurantChartData.map((item) => item.label);
+    const series = chartData.map((item) => item.value);
+    const colors = chartData.map((item) => item.color);
+    const labels = chartData.map((item) => item.label);
 
     const chartRef = useRef(null);
     const chartContainerRef = useRef(null);

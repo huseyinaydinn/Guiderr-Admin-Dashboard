@@ -35,8 +35,8 @@ const menuLinks = [
 
     {
         id: 5,
-        href: "/dashboard/resturents",
-        text: "Resturents Management",
+        href: "/dashboard/restaurant",
+        text: "Restaurant Management",
         icon: <IoRestaurant className="h-6 w-6" />
     },
 
