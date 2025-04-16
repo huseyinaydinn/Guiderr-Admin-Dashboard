@@ -28,7 +28,9 @@ const Layout = ({ children }) => {
             </div>
             <div className={`${isCollapsed ? "md:ml-[315px]" : "ml-[60px] md:ml-[70px]"} overflow-auto transition-all duration-500 w-full`}>
                 <Navbar />
-                {children}
+                <div className="max-w-[1920px] mx-auto">
+                    {children}
+                </div>
             </div>
         </div>
     )

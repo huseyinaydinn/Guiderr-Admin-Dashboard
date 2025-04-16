@@ -112,7 +112,7 @@ const LineChart = ({ width = 800, height = 400 }) => {
 
     return (
         <div className="bg-white shadow rounded p-4">
-            {/* Üst kontrol alanı: Dropdown ve Zoom Butonları */}
+            {/* up zoom and dropdown buttons */}
             <div className="mb-4 flex justify-between items-center">
 
                 <div className="flex flex-row justify-between w-full space-x-2">
@@ -121,7 +121,7 @@ const LineChart = ({ width = 800, height = 400 }) => {
                     </div>
 
                     <select
-                        className="text-gray-700 bg-white hover:bg-gray-50 focus:outline-none border-1 border-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-start inline-flex items-center"
+                        className="text-gray-700  bg-white hover:bg-gray-50 focus:outline-none border-1 border-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-start inline-flex items-center"
                         value={selectedRange}
                         onChange={(e) => {
                             setSelectedRange(e.target.value);

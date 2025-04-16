@@ -1,36 +1,37 @@
-"use client"
+"use client";
 
+import DonutLinesChart from "@/components/restaurants/DonutLinesChart";
+import RestaurantDetailCards from "@/constant/restaurant/RestaurantDetailCards";
+import RestaurantTable from "@/constant/restaurant/RestaurantTable";
+import dynamic from "next/dynamic";
+import { useParams } from "next/navigation";
+import React, { useState } from "react";
+import { FaSortDown, FaSortUp, FaStar } from "react-icons/fa6";
+import { IoFilter } from "react-icons/io5";
+import RestaurantBookingTable from "@/components/restaurants/RestaurantBookingTable";
 
-import DonutLinesChart from "@/components/restaurants/DonutLinesChart"
-import RestaurantDetailCards from "@/constant/restaurant/RestaurantDetailCards"
-import RestaurantTable from "@/constant/restaurant/RestaurantTable"
-import dynamic from "next/dynamic"
-import { useParams } from "next/navigation"
-import React from 'react'
-import { FaSortDown, FaSortUp, FaStar } from "react-icons/fa6"
-import { IoFilter } from "react-icons/io5"
-import RestaurantBookingTable from '@/components/restaurants/RestaurantBookingTable'
+// Dinamik importlar
+const DonutChartCard = dynamic(
+    () => import("@/components/hotels/DonutChartCard"),
+    { ssr: false, loading: () => <p>Loading...</p> }
+);
+const LineChart = dynamic(
+    () => import("@/components/hotels/LineChart"),
+    { ssr: false, loading: () => <p>Loading...</p> }
+);
 
 const page = () => {
-    const params = useParams()
-    const restaurant = RestaurantTable.find(item => item.id === Number(params.id))
+    const params = useParams();
+    const restaurant = RestaurantTable.find(item => item.id === Number(params.id));
 
+    // Eğer geçerli bir restoran bulunamazsa
+    if (!restaurant) return <div className="p-4">Restaurant bulunamadı</div>;
 
-    if (!restaurant) return <div className="p-4">Restaurant bulunamadı</div>
-
-    const DonutChartCard = dynamic(
-        () => import('@/components/hotels/DonutChartCard'),
-        { ssr: false, loading: () => <p>Loading...</p> } // Loading
-    );
-
-    const LineChart = dynamic(
-        () => import('@/components/hotels/LineChart'),
-        { ssr: false, loading: () => <p>Loading...</p> }
-    )
+    // Bu örnekte RestaurantBookingTable bileşenine aktarmak için bir aktif sayfa state'i oluşturduk.
+    const [activePage, setActivePage] = useState(1);
 
     return (
         <div className="w-full mx-auto flex flex-col items-center justify-start">
-
             <div className="w-full bg-gray-300 flex items-center justify-center">
                 <div className="p-4 max-w-[1920px] w-full  bg-gray-300">
                     <div className="w-full flex flex-row items-center justify-between">
@@ -57,7 +58,6 @@ const page = () => {
                             <h4 className="font-medium text-lg text-black">{restaurant.restaurantType}</h4>
                         </div>
 
-
                         <div className="flex flex-col items-start">
                             <h5 className="font-normal text-sm text-gray-600">Hotel Location</h5>
                             <h4 className="font-medium text-lg text-black">{restaurant.restaurantLocation}</h4>
@@ -72,7 +72,6 @@ const page = () => {
                             <h5 className="font-normal text-sm text-gray-600">Commission & Pricing</h5>
                             <h4 className="font-medium text-lg text-black">{restaurant.restaurantCommissionPricing}</h4>
                         </div>
-
 
                         <div className="flex flex-col items-start">
                             <h5 className="font-normal text-sm text-gray-600">Google Rating</h5>
@@ -90,13 +89,13 @@ const page = () => {
                 </div>
             </div>
 
-            <div className="flex flex-row justify-center xl:justify-between items-center max-w-[1920px] flex-wrap  gap-4 w-full p-2 md:p-4 lg:p-6">
+            <div className="flex flex-row justify-center xl:justify-between items-center max-w-[1920px] flex-wrap gap-4 w-full p-2 md:p-4 lg:p-6">
                 {/* Booking & Booking Overview */}
-                <div className="flex flex-col gap-2 lg:gap-4">
+                <div className="flex flex-col gap-2 lg:gap-4 mx-auto ml-4">
                     {/* Booking Card */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 w-full">
                         {RestaurantDetailCards.map((item) => (
-                            <div key={item.id} className="bg-white p-4 rounded-xl shadow-sm border border-gray-200">
+                            <div key={item.id} className="bg-white p-4 rounded-xl shadow-sm border border-gray-200 flex flex-col items-center sm:items-start ">
                                 <div className="flex justify-between items-start">
                                     <div>
                                         <h6 className="text-sm text-gray-600 font-medium">{item.title}</h6>
@@ -107,7 +106,10 @@ const page = () => {
                                     </div>
                                 </div>
                                 <div className="flex flex-row flex-nowrap items-center gap-1">
-                                    <p className={`flex flex-row items-center gap-1 mt-2 text-xs ${item.percent > 0 ? 'text-green-400' : 'text-red-500'}`}>{item.percent}%{item.percent > 0 ? <FaSortUp className="w-2 h-2" /> : <FaSortDown className="w-2 h-2" />}</p>
+                                    <p className={`flex flex-row items-center gap-1 mt-2 text-xs ${item.percent > 0 ? 'text-green-400' : 'text-red-500'}`}>
+                                        {item.percent}%
+                                        {item.percent > 0 ? <FaSortUp className="w-2 h-2" /> : <FaSortDown className="w-2 h-2" />}
+                                    </p>
                                     <p className="mt-2 text-xs text-gray-500">{item.date}</p>
                                 </div>
                             </div>
@@ -115,15 +117,12 @@ const page = () => {
                     </div>
 
                     {/* Booking Overview */}
-                    <div className="flex flex-col items-start justify-between">
+                    <div>
                         <LineChart width={600} height={200} />
                     </div>
-
-
-
                 </div>
 
-                {/* bookings category */}
+                {/* Bookings category */}
                 <div className="flex flex-col items-center justify-between gap-4">
                     <div className="w-full flex flex-row flex-nowrap items-center justify-between gap-4">
                         <h5 className="font-semibold text-lg">Bookings Category</h5>
@@ -144,11 +143,15 @@ const page = () => {
                 </div>
             </div>
 
+            {/* Restaurant Booking Table Bölümü */}
             <div className="flex justify-center w-full mx-auto">
-                <RestaurantBookingTable />
+                <RestaurantBookingTable
+                    restaurantId={restaurant.id}
+                    activePage={activePage}
+                />
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default page
+export default page;
