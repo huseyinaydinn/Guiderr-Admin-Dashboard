@@ -1,9 +1,9 @@
 import { MdOutlineApartment } from "react-icons/md";
 
 const { FiHome, FiUsers, FiSettings } = require("react-icons/fi");
-const { IoRocketOutline, IoRestaurant } = require("react-icons/io5");
+const { IoRestaurant } = require("react-icons/io5");
 const { RiRobot2Line } = require("react-icons/ri");
-const { LiaHotelSolid } = require("react-icons/lia");
+const { LiaHotelSolid, LiaMapMarkedAltSolid } = require("react-icons/lia");
 
 
 
@@ -22,9 +22,9 @@ const menuLinks = [
     },
     {
         id: 3,
-        href: "/dashboard/users",
-        text: "Users Managment",
-        icon: <FiUsers className="h-6 w-6" />
+        href: "/dashboard/GuiderrMapView",
+        text: "Guiderr.ai Map View",
+        icon: <LiaMapMarkedAltSolid className="h-6 w-6" />
     },
     {
         id: 4,

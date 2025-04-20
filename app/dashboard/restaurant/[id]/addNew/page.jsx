@@ -1,11 +1,15 @@
 "use client";
 
 import TagsInput from "@/components/restaurants/AddNewDish/AddNewTag/AddNewTagComponent";
+import ImageUploadContainer from "@/components/restaurants/AddNewDish/AddNewTag/ImageUploadContainer";
 import React, { useState } from "react";
+
 
 const page = () => {
     const [activeTab, setActiveTab] = useState("Dishes");
     const [activePage, setActivePage] = useState(1); // Sayfa sayısını yönetmek için
+
+
 
     return (
         <div className="flex flex-col items-start gap-4 px-6 py-8">
@@ -41,7 +45,7 @@ const page = () => {
             <div className="mt-6 w-full">
                 {/* add new dishes content */}
                 {activeTab === "Dishes" && (
-                    <div className="flex flex-col items-start gap-3 p-1 md:p-6">
+                    <div className="flex flex-col items-start gap-4 p-1 md:p-6">
                         <h5 className="font-semibold text-lg">Add New Dish Details</h5>
 
                         {/* Grid container'a justify-items-start ekledik */}
@@ -98,9 +102,34 @@ const page = () => {
                             ></textarea>
                         </div>
 
+
                         <div>
                             <h5 className="font-semibold text-lg">Extra</h5>
                             <TagsInput />
+                        </div>
+                        <div className="flex flex-col items-start gap-4">
+                            <h5 className="font-semibold text-lg">Upload Images</h5>
+                            <div className="flex flex-row gap-4">
+                                <ImageUploadContainer />
+                                <ImageUploadContainer />
+                                <ImageUploadContainer />
+                                <ImageUploadContainer />
+                                <ImageUploadContainer />
+                                <ImageUploadContainer />
+                                <ImageUploadContainer />
+                            </div>
+
+                        </div>
+
+                        <div className="flex flex-row items-center w-full justify-end gap-4 mt-4">
+                            <button
+                                className="flex flex-row flex-nowrap items-center cursor-pointer gap-2 px-12 py-2 border border-gray-300 bg-white rounded-lg hover:hover:bg-gray-200 text-gray-600 transition-colors duration-300">
+                                <p>Cancel</p>
+                            </button>
+                            <button
+                                className="flex flex-row flex-nowrap items-center cursor-pointer gap-2 px-12 py-2 bg-blue-400 rounded-lg hover:hover:bg-blue-500 text-white transition-colors duration-300">
+                                <p>Save</p>
+                            </button>
                         </div>
                     </div>
                 )}

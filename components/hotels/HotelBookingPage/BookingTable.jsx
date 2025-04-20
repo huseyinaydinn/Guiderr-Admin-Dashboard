@@ -1,6 +1,6 @@
 "use client"
 
-import Link from "next/link";
+
 import { useRef, useEffect, useState } from "react";
 import { BsThreeDotsVertical } from 'react-icons/bs';
 import { MdDelete, MdEdit, MdInfo } from "react-icons/md";
@@ -13,25 +13,25 @@ const BookingTypeStyles = {
 };
 
 const StatusStyles = {
-    completed: "text-green-600 bg-green-50 px-2 py-1 rounded-full",
-    canceled: "text-red-600 bg-red-50 px-2 py-1 rounded-full"
+    completed: "text-green-600 bg-green-50 px-2 py-1 rounded-full w-fit",
+    canceled: "text-red-600 bg-red-50 px-2 py-1 rounded-full w-fit"
 };
 
 const BookingTable = ({ columns, data, isReviews }) => {
     const [openMenuId, setOpenMenuId] = useState(null);
     const menuRef = useRef(null);
 
-    // Pagination state: Her sayfada 10 veri gösterilecek.
+    // Pagination state: 10 data will be shown on each page.
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10;
     const totalPages = Math.ceil(data.length / itemsPerPage);
 
-    // Tab veya data değiştiğinde, sayfa numarasını sıfırlayalım.
+    // When the tab or data changes reset the page number.
     useEffect(() => {
         setCurrentPage(1);
     }, [data]);
 
-    // Mevcut sayfa verisini hesapla.
+    // Calculate current page data.
     const paginatedData = data.slice(
         (currentPage - 1) * itemsPerPage,
         currentPage * itemsPerPage
@@ -125,18 +125,18 @@ const BookingTable = ({ columns, data, isReviews }) => {
                                 const dataKey = columnKeyMap[col] || col.replace(/[^a-zA-Z]/g, '');
                                 let cellContent = row[dataKey];
 
-                                // "Booking Type" sütunu için stil uygulama
+                                // Apply a style for the "Booking Type" column
                                 if (col === 'Booking Type' && row[dataKey]) {
                                     const type = row[dataKey].toLowerCase();
                                     const styleClass = BookingTypeStyles[type] || "";
                                     cellContent = <span className={styleClass}>• {row[dataKey]}</span>;
                                 }
 
-                                // "Status" sütunu için stil uygulama
+                                // Apply a style for the "Status" column
                                 if (col === 'Status' && row[dataKey]) {
                                     const status = row[dataKey].toLowerCase();
                                     const styleClass = StatusStyles[status] || "";
-                                    cellContent = <span className={styleClass}>• {row[dataKey]}</span>;
+                                    cellContent = <span className={`${styleClass} flex flex-row flex-nowrap items-center min-w-[90px]`}>• {row[dataKey]}</span>;
                                 }
 
                                 return (
@@ -188,7 +188,7 @@ const BookingTable = ({ columns, data, isReviews }) => {
                     ))}
                 </tbody>
             </table>
-            {/* Pagination Kontrolleri */}
+            {/* Pagination Controls */}
             <div className="flex items-center justify-between px-4 py-2 bg-gray-100">
                 <span className="text-gray-700">
                     Page {currentPage} of {totalPages}

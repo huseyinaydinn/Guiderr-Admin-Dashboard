@@ -5,7 +5,7 @@ import React, { useState, useEffect } from 'react'
 import sidebarLogo from '@/public/GuiderrLogo.svg'
 import { FiSidebar } from "react-icons/fi";
 import Link from "next/link";
-import menuLinks from "@/constant/constant";
+import menuLinks from "@/constant/SidebarMenu";
 import { CiLogin } from "react-icons/ci";
 import CollapsedLogo from '@/public/CollapsedLogo.svg'
 import { usePathname } from 'next/navigation'; // Next.js 13+ için

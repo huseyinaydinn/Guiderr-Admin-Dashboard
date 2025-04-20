@@ -4,7 +4,7 @@ import RestaurantTable from "@/constant/restaurant/RestaurantTable";
 import Link from "next/link";
 import React, { useState, useEffect, useRef } from 'react'
 import { BsDot, BsThreeDotsVertical } from "react-icons/bs";
-import { FaPlus, FaStar, FaArrowDown, FaArrowUp, FaInfo } from "react-icons/fa6";
+import { FaPlus, FaStar, FaArrowDown, FaArrowUp, FaInfo, FaCaretUp, FaCaretDown } from "react-icons/fa6";
 import { IoFilterOutline } from "react-icons/io5";
 import { LuFileCheck } from "react-icons/lu";
 import { MdEdit, MdDelete } from "react-icons/md";
@@ -143,25 +143,43 @@ const Page = () => {
         setActiveDropdown(activeDropdown === id ? null : id);
     };
 
+    const stats = [
+        { title: 'Total Restaurants', count: 784, change: 7, weekRange: 25 },
+        { title: 'Active Restaurants', count: 512, change: -3, weekRange: 30 },
+        { title: 'Pending Restaurants', count: 102, change: 12, weekRange: 6 },
+        { title: 'Blocked Restaurants', count: 23, change: -5, weekRange: 12 },
+    ]
+
+
     return (
         <div className="mx-auto max-w-[2880px] pb-6 px-4 md:px-6 lg:px-8 flex flex-col gap-6">
 
-            {/* Cards */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 w-full pt-4">
-                {['Total Restaurants', 'Active Restaurants', 'Pending Restaurants', 'Blocked Restaurants'].map((title, index) => (
-                    <div key={index} className="bg-white p-4 rounded-xl shadow-sm border border-gray-200">
-                        <div className="flex justify-between items-start">
-                            <div>
-                                <h6 className="text-sm text-gray-600 font-medium">{title}</h6>
-                                <h4 className="text-2xl font-bold mt-1">784</h4>
+                {stats.map(({ title, count, change, weekRange }, idx) => {
+                    const isPositive = change >= 0
+                    const ArrowIcon = isPositive ? FaCaretUp : FaCaretDown
+                    const changeColor = isPositive ? 'text-green-400' : 'text-red-400'
+
+                    return (
+                        <div key={idx} className="bg-white p-4 rounded-xl shadow-sm border border-gray-200">
+                            <div className="flex justify-between items-start">
+                                <div>
+                                    <h6 className="text-sm text-gray-600 font-medium">{title}</h6>
+                                    <h4 className="text-2xl font-bold mt-1">{count}</h4>
+                                </div>
+                                <div className="p-2 bg-purple-100 rounded-lg">
+                                    <LuFileCheck className="w-5 h-5 text-purple-900" />
+                                </div>
                             </div>
-                            <div className="p-2 bg-purple-100 rounded-lg">
-                                <LuFileCheck className="w-5 h-5 text-purple-900" />
-                            </div>
+                            <p className="flex items-center gap-1 mt-2 text-xs">
+                                <span className={`flex items-center gap-1 ${changeColor}`}>
+                                    {Math.abs(change)}%<ArrowIcon />
+                                </span>
+                                {weekRange} Last Week
+                            </p>
                         </div>
-                        <p className="mt-2 text-xs text-gray-500">7% 36 Last Week</p>
-                    </div>
-                ))}
+                    )
+                })}
             </div>
 
             {/* Search & Filter Side */}

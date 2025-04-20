@@ -54,7 +54,7 @@ const TagsInput = () => {
 
     return (
         <div className="w-full rounded-lg p-2">
-            <div className="flex flex-row items-start gap-2">
+            <div className="flex flex-col sm:flex-row items-center gap-2">
                 <div className="mt-3 p-2 border border-gray-200 rounded-md flex flex-wrap">
                     <ul className="flex flex-wrap gap-1">
                         {tags.map((tag, index) => (
@@ -80,11 +80,12 @@ const TagsInput = () => {
                 </div>
                 <button
                     onClick={handleAddTag}
-                    className="px-2 py-2 bg-blue-400 text-white rounded-lg mt-2 cursor-pointer text-xl"
+                    className="px-2 py-2  bg-blue-400 text-white rounded-lg mt-4 cursor-pointer text-xl"
                 >
                     +New
                 </button>
             </div>
+
         </div>
     );
 };

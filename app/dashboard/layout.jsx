@@ -26,7 +26,7 @@ const Layout = ({ children }) => {
             <div className={`h-screen text-white fixed sidebar ${isCollapsed ? 'w-screen md:w-[312px]' : 'w-[70px]'} transition-all flex flex-col items-center  duration-500 md:max-w-[312px] z-[9999]`}>
                 <Sidebar toggleSidebar={toggleSidebar} isCollapsed={isCollapsed} />
             </div>
-            <div className={`${isCollapsed ? "md:ml-[315px]" : "ml-[60px] md:ml-[70px]"} overflow-auto transition-all duration-500 w-full`}>
+            <div className={`${isCollapsed ? "md:ml-[312px]" : "ml-[60px] md:ml-[70px]"} overflow-auto transition-all duration-500 w-full`}>
                 <Navbar />
                 <div className="max-w-[1920px] mx-auto">
                     {children}
