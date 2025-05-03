@@ -7,7 +7,7 @@ import { MdApartment } from "react-icons/md"
 
 const GuiderrMapView = () => {
 
-    const stats = [
+    const cardStats = [
         { title: 'Total Restaurant', count: 3182, change: 7, weekRange: 25, icon: <GiHotMeal className="w-5 h-5 text-purple-900" /> },
         { title: 'Total Hotels', count: 6752, change: -3, weekRange: 30, icon: <FaHotel className="w-5 h-5 text-purple-900" /> },
         { title: 'Total Apartments', count: 2485, change: 12, weekRange: 6, icon: <MdApartment className="w-5 h-5 text-purple-900" /> },
@@ -18,7 +18,7 @@ const GuiderrMapView = () => {
         <div className="flex flex-col items-start w-full  px-4 md:px-6 h-screen">
             {/* Map View Cards */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 w-full pt-4">
-                {stats.map(({ title, count, change, weekRange, icon }, idx) => {
+                {cardStats.map(({ title, count, change, weekRange, icon }, idx) => {
                     const isPositive = change >= 0
                     const ArrowIcon = isPositive ? FaCaretUp : FaCaretDown
                     const changeColor = isPositive ? 'text-green-400' : 'text-red-400'

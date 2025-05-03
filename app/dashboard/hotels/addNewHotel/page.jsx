@@ -13,12 +13,42 @@ import {
     checkInOutOptions
 } from '@/constant/hotels/AddNewHotel'
 
+/*
+API Integration Points:
+1. POST /api/hotels - Create new hotel
+   Payload: {
+     hotelDetails: { name, type, location, phone, email, website },
+     amenities: string[],
+     pricing: { basePrice, seasonalRule, commission },
+     rooms: {
+       [category]: {
+         images: File[],
+         policy: string,
+         checkInOut: string,
+         price: number,
+         numberOfRooms: number
+       }
+     }
+   }
 
+2. POST /api/hotels/{hotelId}/images - Upload hotel room images
+   Payload: FormData with files
+
+Expected Response:
+{
+  success: boolean,
+  data: {
+    id: string,
+    ... hotel details
+  },
+  error?: string
+}
+*/
 
 // Reusable Components
 const FileUpload = ({ id, label }) => (
     <div className="relative group">
-        <input type="file" className="hidden" id={id} accept=".jpeg,.jpg,.pdf" />
+        <input type="file" className="hidden" id={id} accept="image/*" />
         <label
             htmlFor={id}
             className="h-full flex flex-col items-center justify-center border-2 border-dashed border-gray-200 rounded-xl p-6 hover:border-primary transition-colors cursor-pointer"
@@ -28,36 +58,45 @@ const FileUpload = ({ id, label }) => (
                     <ImUpload className="text-3xl text-primary text-white" />
                 </div>
                 <p className="text-gray-600 font-medium">{label}</p>
-                <p className="text-sm text-gray-400">Supported formats: JPEG, PDF</p>
+                <p className="text-sm text-gray-400">Supported formats: JPEG, PNG</p>
             </div>
         </label>
     </div>
 );
 
 const RoomTypeSection = ({ title, categoryKey, images, handleImageChange, handleRemoveImage }) => {
+    // Simple state management
     const [selectedPolicy, setSelectedPolicy] = useState('');
     const [selectedCheckInOut, setSelectedCheckInOut] = useState('');
     const [price, setPrice] = useState('');
     const [numberOfRooms, setNumberOfRooms] = useState('');
 
+    // Simple handler functions
     const handlePriceChange = (e) => {
         const value = e.target.value.replace(/[^0-9]/g, '');
         setPrice(value ? `$ ${value}` : '');
+        console.log('Price changed:', value);
+        // TODO: API Integration - Update room price
     };
 
     const handleNumberChange = (e) => {
         const value = e.target.value.replace(/[^0-9]/g, '');
         setNumberOfRooms(value);
+        console.log('Number of rooms changed:', value);
+        // TODO: API Integration - Update number of rooms
     };
 
     return (
         <div className="min-h-[500px] flex flex-col gap-6 mb-10 text-gray-500 text-xl">
             <h4 className="font-semibold text-2xl mb-2 text-gray-800">{title}</h4>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                {/* Room Type Dropdown */}
+                {/* Form fields */}
                 <div>
                     <label className="block mb-1 text-sm">Room Type</label>
-                    <Listbox value={title} onChange={() => { }}>
+                    <Listbox value={title} onChange={() => {
+                        console.log('Room type changed');
+                        // TODO: API Integration - Update room type
+                    }}>
                         <div className="relative">
                             <Listbox.Button className="w-full border px-4 py-3 rounded-md border-gray-300 outline-none focus:border-gray-400 transition-colors duration-300 text-left bg-gray-100">
                                 {title}
@@ -66,7 +105,6 @@ const RoomTypeSection = ({ title, categoryKey, images, handleImageChange, handle
                     </Listbox>
                 </div>
 
-                {/* Number of Rooms */}
                 <div>
                     <label className="block mb-1 text-sm">Number of Rooms</label>
                     <input
@@ -75,126 +113,75 @@ const RoomTypeSection = ({ title, categoryKey, images, handleImageChange, handle
                         onChange={handleNumberChange}
                         placeholder="Enter"
                         className="w-full border px-4 py-3 rounded-md placeholder:font-extralight border-gray-300 outline-none focus:border-gray-400 transition-colors duration-300"
-                        onKeyDown={(e) => ['e', 'E', '+', '-', '.'].includes(e.key) && e.preventDefault()}
                     />
                 </div>
 
-                {/* Cancellation Policy Dropdown */}
-                <div>
-                    <label className="block mb-1 text-sm">Cancellation Policy</label>
-                    <Listbox value={selectedPolicy} onChange={setSelectedPolicy}>
-                        <div className="relative">
-                            <Listbox.Button className="w-full border px-4 py-3 rounded-md border-gray-300 outline-none focus:border-gray-400 transition-colors duration-300 text-left">
-                                {selectedPolicy || 'Select Policy'}
-                            </Listbox.Button>
-                            <Transition
-                                as={Fragment}
-                                leave="transition ease-in duration-100"
-                                leaveFrom="opacity-100"
-                                leaveTo="opacity-0"
-                            >
-                                <Listbox.Options className="absolute z-10 mt-1 w-full bg-white shadow-lg rounded-md border border-gray-200 max-h-60 overflow-auto">
-                                    {cancellationPolicies.map((policy, index) => (
-                                        <Listbox.Option
-                                            key={index}
-                                            value={policy}
-                                            className={({ active }) => `cursor-pointer p-3 ${active ? 'bg-blue-50' : ''}`}
-                                        >
-                                            {policy}
-                                        </Listbox.Option>
-                                    ))}
-                                </Listbox.Options>
-                            </Transition>
-                        </div>
-                    </Listbox>
-                </div>
-
-                {/* Check-in/Check-out Dropdown */}
-                <div>
-                    <label className="block mb-1 text-sm">Check-in/Check-out Policy</label>
-                    <Listbox value={selectedCheckInOut} onChange={setSelectedCheckInOut}>
-                        <div className="relative">
-                            <Listbox.Button className="w-full border px-4 py-3 rounded-md border-gray-300 outline-none focus:border-gray-400 transition-colors duration-300 text-left">
-                                {selectedCheckInOut || 'Select Time'}
-                            </Listbox.Button>
-                            <Transition
-                                as={Fragment}
-                                leave="transition ease-in duration-100"
-                                leaveFrom="opacity-100"
-                                leaveTo="opacity-0"
-                            >
-                                <Listbox.Options className="absolute z-20 mt-1 w-full bg-white shadow-lg rounded-md border border-gray-200 max-h-60 overflow-auto ">
-                                    {checkInOutOptions.map((option, index) => (
-                                        <Listbox.Option
-                                            key={index}
-                                            value={`Check-in: ${option.checkIn}, Check-out: ${option.checkOut}`}
-                                            className={({ active }) => `cursor-pointer p-3 ${active ? 'bg-blue-50' : ''}`}
-                                        >
-                                            {`Check-in: ${option.checkIn}, Check-out: ${option.checkOut}`}
-                                        </Listbox.Option>
-                                    ))}
-                                </Listbox.Options>
-                            </Transition>
-                        </div>
-                    </Listbox>
-                </div>
-
-                {/* Price Input */}
                 <div>
                     <label className="block mb-1 text-sm">Price per Night</label>
-                    <div className="relative">
-                        <input
-                            type="text"
-                            value={price}
-                            onChange={handlePriceChange}
-                            placeholder="$ 0"
-                            className="w-full border px-4 py-3 rounded-md placeholder:font-extralight border-gray-300 outline-none focus:border-gray-400 transition-colors duration-300"
-                            onKeyDown={(e) => ['e', 'E', '+', '-', '.'].includes(e.key) && e.preventDefault()}
-                        />
-
-                    </div>
+                    <input
+                        type="text"
+                        value={price}
+                        onChange={handlePriceChange}
+                        placeholder="$ 0"
+                        className="w-full border px-4 py-3 rounded-md placeholder:font-extralight border-gray-300 outline-none focus:border-gray-400 transition-colors duration-300"
+                    />
                 </div>
             </div>
 
+            {/* Image upload section */}
             <div>
                 <h5 className="text-lg mb-2">Upload Rooms Images</h5>
                 <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-7 gap-4">
+                    {/* Existing images */}
                     {images[categoryKey].map((imgSrc, idx) => (
-                        <div key={`${categoryKey}-${idx}`} className="relative group">
-                            <label className="block border-2 border-dashed border-gray-300 rounded-md text-center p-4 cursor-pointer hover:border-blue-400 overflow-hidden h-full">
-                                {imgSrc ? (
-                                    <>
-                                        <img
-                                            src={imgSrc}
-                                            alt="preview"
-                                            className="w-full h-full object-cover absolute inset-0 z-0"
-                                        />
-                                        <button
-                                            type="button"
-                                            onClick={(e) => {
-                                                e.preventDefault();
-                                                handleRemoveImage(categoryKey, idx);
-                                            }}
-                                            className="absolute top-1 right-1 bg-red-500 text-white rounded-full p-1 z-10 hover:bg-red-600 transition-colors"
-                                        >
-                                            <RxCross2 className="w-3 h-3" />
-                                        </button>
-                                    </>
-                                ) : (
-                                    <div className="flex flex-col items-center justify-center h-24 text-gray-500 relative z-10">
-                                        <span className="text-2xl font-semibold">+</span>
-                                        <span className="text-sm">Upload</span>
-                                    </div>
-                                )}
-                                <input
-                                    type="file"
-                                    accept="image/*"
-                                    className="hidden"
-                                    onChange={(e) => handleImageChange(e, categoryKey, idx)}
-                                />
-                            </label>
+                        <div key={`${categoryKey}-${idx}`} className="relative group h-[150px]">
+                            <div className="block border-2 border-dashed border-gray-300 rounded-md text-center p-4 overflow-hidden h-full w-full">
+                                <div className="relative w-full h-full">
+                                    <img
+                                        src={imgSrc}
+                                        alt="preview"
+                                        className="absolute inset-0 w-full h-full object-cover"
+                                    />
+                                    <button
+                                        type="button"
+                                        onClick={(e) => {
+                                            e.preventDefault();
+                                            console.log('Remove image:', { categoryKey, idx });
+                                            handleRemoveImage(categoryKey, idx);
+                                            // TODO: API Integration - Delete room image
+                                        }}
+                                        className="absolute top-2 right-2 bg-red-500 text-white rounded-full p-1 z-10 hover:bg-red-600 transition-colors"
+                                    >
+                                        <RxCross2 className="w-4 h-4" />
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     ))}
+
+                    {/* Upload button */}
+                    <div className="relative group h-[150px]">
+                        <label className="block border-2 border-dashed border-gray-300 rounded-md text-center p-4 cursor-pointer hover:border-blue-400 overflow-hidden h-full w-full">
+                            <div className="flex flex-col items-center justify-center h-full text-gray-500 relative z-10">
+                                <span className="text-2xl font-semibold">+</span>
+                                <span className="text-sm">Upload</span>
+                            </div>
+                            <input
+                                type="file"
+                                accept="image/*"
+                                multiple
+                                className="hidden"
+                                onChange={(e) => {
+                                    console.log('Upload images:', {
+                                        categoryKey,
+                                        fileCount: e.target.files?.length
+                                    });
+                                    handleImageChange(e, categoryKey);
+                                    // TODO: API Integration - Upload room images
+                                }}
+                            />
+                        </label>
+                    </div>
                 </div>
             </div>
         </div>
@@ -202,13 +189,13 @@ const RoomTypeSection = ({ title, categoryKey, images, handleImageChange, handle
 };
 
 const Page = () => {
-    // State management
+    // Simple state management
     const [currentStep, setCurrentStep] = useState(0);
     const [images, setImages] = useState({
-        standard: Array(7).fill(null),
-        deluxe: Array(7).fill(null),
-        suite: Array(7).fill(null),
-        family: Array(7).fill(null),
+        standard: [],
+        deluxe: [],
+        suite: [],
+        family: [],
     });
 
     const [formData, setFormData] = useState({
@@ -226,45 +213,68 @@ const Page = () => {
         commission: ''
     });
 
-    // Handlers
-    const handleImageChange = (event, category, index) => {
-        const file = event.target.files?.[0];
-        if (!file) return;
+    // Simple handler functions
+    const handleImageChange = (event, category) => {
+        const files = Array.from(event.target.files || []);
+        if (!files.length) return;
 
-        const imageUrl = URL.createObjectURL(file);
-        setImages(prev => {
-            const prevImg = prev[category][index];
-            if (prevImg) URL.revokeObjectURL(prevImg); // Önce eski URL'i temizle
-            return {
-                ...prev,
-                [category]: prev[category].map((img, i) => i === index ? imageUrl : img)
-            }
-        });
+        const imageUrls = files.map(file => URL.createObjectURL(file));
+        setImages(prev => ({
+            ...prev,
+            [category]: [...prev[category], ...imageUrls]
+        }));
     };
+
     const handleRemoveImage = (category, index) => {
         setImages(prev => {
-            const imgToRemove = prev[category][index];
+            const newImages = [...prev[category]];
+            const imgToRemove = newImages[index];
             if (imgToRemove) URL.revokeObjectURL(imgToRemove);
+            newImages.splice(index, 1);
             return {
                 ...prev,
-                [category]: prev[category].map((img, i) => i === index ? null : img)
-            }
+                [category]: newImages
+            };
         });
     };
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setFormData(prev => ({ ...prev, [name]: value }));
+        console.log('Form data changed:', { [name]: value });
+        // TODO: API Integration - Update hotel details
     };
 
     const handlePricingChange = (name, value) => {
         const numericValue = value.replace(/[^0-9.]/g, '');
         setPricing(prev => ({ ...prev, [name]: numericValue }));
+        console.log('Pricing changed:', { [name]: numericValue });
+        // TODO: API Integration - Update pricing
     };
 
-    // Step navigation
-    const nextStep = () => setCurrentStep(prev => Math.min(prev + 1, 1));
-    const prevStep = () => setCurrentStep(prev => Math.max(prev - 1, 0));
+    // Navigation handlers
+    const nextStep = () => {
+        console.log('Moving to next step');
+        setCurrentStep(prev => Math.min(prev + 1, 1));
+        // Scroll to top of the page
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        // TODO: API Integration - Save current step data
+    };
+
+    const prevStep = () => {
+        console.log('Moving to previous step');
+        setCurrentStep(prev => Math.max(prev - 1, 0));
+    };
+
+    // Form submission
+    const handleSubmit = () => {
+        console.log('Form submitted with data:', {
+            formData,
+            pricing,
+            images
+        });
+        // TODO: API Integration - Submit all hotel data
+    };
 
     return (
         <div className="px-4 md:px-4 lg:px-6 py-4 md:py-8">
@@ -481,6 +491,12 @@ const Page = () => {
                     className="text-center px-8 md:px-16 py-2.5 bg-blue-400 text-white rounded-lg hover:bg-blue-500 transition-colors"
                 >
                     {currentStep === 1 ? 'Finish' : 'Next'}
+                </button>
+                <button
+                    onClick={handleSubmit}
+                    className="text-center px-8 md:px-16 py-2.5 bg-blue-400 text-white rounded-lg hover:bg-blue-500 transition-colors"
+                >
+                    Submit
                 </button>
             </div>
         </div>

@@ -477,7 +477,7 @@ const RoleManagment = () => {
                                     <option value="">Select role type</option>
                                     {Object.keys(roleStyles).map(role => (
                                         <option key={role} value={role} className={`${roleStyles[role]}`}>
-                                            • {role.charAt(0).toUpperCase() + role.slice(1)}
+                                            • {role.slice(0)}
                                         </option>
                                     ))}
                                 </select>

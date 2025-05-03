@@ -6,6 +6,7 @@ import { Manrope } from "next/font/google";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import { useState } from "react";
 import FormImage from '@/public/login_Image.jpg'
+import Link from 'next/link';
 
 const fontManrope = Manrope({ subsets: ["latin"] });
 
@@ -59,12 +60,14 @@ export default function LoginPage() {
                                 </div>
                             </div>
 
-                            <button
-                                type="submit"
-                                className="w-full bg-[#4A90E2] hover:bg-blue-600 text-white font-medium py-2.5 sm:py-3 rounded-[18px] text-xs sm:text-sm"
-                            >
-                                Sign In
-                            </button>
+                            <Link href={"/dashboard"} className="w-full">
+    <button
+        type="button"
+        className="w-full bg-[#4A90E2] hover:bg-blue-600 text-white font-medium py-2.5 sm:py-3 rounded-[18px] text-xs sm:text-sm cursor-pointer"
+    >
+        Sign In
+    </button>
+</Link>
                         </form>
                     </div>
                 </div>
